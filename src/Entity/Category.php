@@ -16,7 +16,7 @@ class Category
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $designation = null;
+    private ?string $name = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $representation = null;
@@ -37,14 +37,14 @@ class Category
         return $this->id;
     }
 
-    public function getDesignation(): ?string
+    public function getName(): ?string
     {
-        return $this->designation;
+        return $this->name;
     }
 
-    public function setDesignation(string $designation): static
+    public function setName(string $name): static
     {
-        $this->designation = $designation;
+        $this->name = $name;
 
         return $this;
     }

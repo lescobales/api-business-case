@@ -1,0 +1,7 @@
+App\Entity\Address:
+  address{1..200}:
+    line1: '<streetAddress()>'
+    line2: '<secondaryAddress()>'
+    line3: '<streetName()>'
+    postCode: '<postcode()>'
+    city: '<city()>'

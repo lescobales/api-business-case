@@ -24,20 +24,11 @@ class Nft
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $representation = null;
-
     #[ORM\Column]
     private ?float $initialPrice = null;
 
-    #[ORM\Column]
-    private ?bool $isCollection = null;
-
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $createdAt = null;
-
-    #[ORM\OneToMany(mappedBy: 'nft', targetEntity: Item::class, orphanRemoval: true)]
-    private Collection $items;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
@@ -57,11 +48,20 @@ class Nft
     #[ORM\JoinColumn(nullable: false)]
     private ?User $owner = null;
 
+    #[ORM\ManyToMany(targetEntity: PreOrder::class, mappedBy: 'nfts')]
+    private Collection $preOrders;
+
+    #[ORM\ManyToOne(inversedBy: 'nfts')]
+    private ?NftCollection $nftCollection = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $representation = null;
+
     public function __construct()
     {
-        $this->items = new ArrayCollection();
         $this->nftValues = new ArrayCollection();
         $this->visits = new ArrayCollection();
+        $this->preOrders = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -93,18 +93,6 @@ class Nft
         return $this;
     }
 
-    public function getRepresentation(): ?string
-    {
-        return $this->representation;
-    }
-
-    public function setRepresentation(?string $representation): static
-    {
-        $this->representation = $representation;
-
-        return $this;
-    }
-
     public function getInitialPrice(): ?float
     {
         return $this->initialPrice;
@@ -117,18 +105,6 @@ class Nft
         return $this;
     }
 
-    public function isIsCollection(): ?bool
-    {
-        return $this->isCollection;
-    }
-
-    public function setIsCollection(bool $isCollection): static
-    {
-        $this->isCollection = $isCollection;
-
-        return $this;
-    }
-
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
@@ -137,36 +113,6 @@ class Nft
     public function setCreatedAt(\DateTimeInterface $createdAt): static
     {
         $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Item>
-     */
-    public function getItems(): Collection
-    {
-        return $this->items;
-    }
-
-    public function addItem(Item $item): static
-    {
-        if (!$this->items->contains($item)) {
-            $this->items->add($item);
-            $item->setNft($this);
-        }
-
-        return $this;
-    }
-
-    public function removeItem(Item $item): static
-    {
-        if ($this->items->removeElement($item)) {
-            // set the owning side to null (unless already changed)
-            if ($item->getNft() === $this) {
-                $item->setNft(null);
-            }
-        }
 
         return $this;
     }
@@ -263,6 +209,57 @@ class Nft
     public function setOwner(?User $owner): static
     {
         $this->owner = $owner;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PreOrder>
+     */
+    public function getPreOrders(): Collection
+    {
+        return $this->preOrders;
+    }
+
+    public function addPreOrder(PreOrder $preOrder): static
+    {
+        if (!$this->preOrders->contains($preOrder)) {
+            $this->preOrders->add($preOrder);
+            $preOrder->addNft($this);
+        }
+
+        return $this;
+    }
+
+    public function removePreOrder(PreOrder $preOrder): static
+    {
+        if ($this->preOrders->removeElement($preOrder)) {
+            $preOrder->removeNft($this);
+        }
+
+        return $this;
+    }
+
+    public function getNftCollection(): ?NftCollection
+    {
+        return $this->nftCollection;
+    }
+
+    public function setNftCollection(?NftCollection $nftCollection): static
+    {
+        $this->nftCollection = $nftCollection;
+
+        return $this;
+    }
+
+    public function getRepresentation(): ?string
+    {
+        return $this->representation;
+    }
+
+    public function setRepresentation(?string $representation): static
+    {
+        $this->representation = $representation;
 
         return $this;
     }

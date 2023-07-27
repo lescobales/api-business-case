@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\PreOrderRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PreOrderRepository::class)]
@@ -15,20 +16,29 @@ class PreOrder
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?bool $isPurchase = null;
-
     #[ORM\ManyToOne(inversedBy: 'preOrders')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $asker = null;
 
-    #[ORM\ManyToMany(targetEntity: PreOrderItem::class, mappedBy: 'preOrders')]
-    private Collection $preOrderItems;
+    #[ORM\ManyToMany(targetEntity: Nft::class, inversedBy: 'preOrders')]
+    private Collection $nfts;
+
+    #[ORM\Column]
+    private ?int $amount = null;
+
+    #[ORM\Column]
+    private ?bool $isPurchase = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $purchaseAt = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $createdAt = null;
 
 
     public function __construct()
     {
-        $this->preOrderItems = new ArrayCollection();
+        $this->nfts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -49,28 +59,73 @@ class PreOrder
     }
 
     /**
-     * @return Collection<int, PreOrderItem>
+     * @return Collection<int, Nft>
      */
-    public function getPreOrderItems(): Collection
+    public function getNfts(): Collection
     {
-        return $this->preOrderItems;
+        return $this->nfts;
     }
 
-    public function addPreOrderItem(PreOrderItem $preOrderItem): static
+    public function addNft(Nft $nft): static
     {
-        if (!$this->preOrderItems->contains($preOrderItem)) {
-            $this->preOrderItems->add($preOrderItem);
-            $preOrderItem->addPreOrder($this);
+        if (!$this->nfts->contains($nft)) {
+            $this->nfts->add($nft);
         }
 
         return $this;
     }
 
-    public function removePreOrderItem(PreOrderItem $preOrderItem): static
+    public function removeNft(Nft $nft): static
     {
-        if ($this->preOrderItems->removeElement($preOrderItem)) {
-            $preOrderItem->removePreOrder($this);
-        }
+        $this->nfts->removeElement($nft);
+
+        return $this;
+    }
+
+    public function getAmount(): ?int
+    {
+        return $this->amount;
+    }
+
+    public function setAmount(int $amount): static
+    {
+        $this->amount = $amount;
+
+        return $this;
+    }
+
+    public function isIsPurchase(): ?bool
+    {
+        return $this->isPurchase;
+    }
+
+    public function setIsPurchase(bool $isPurchase): static
+    {
+        $this->isPurchase = $isPurchase;
+
+        return $this;
+    }
+
+    public function getPurchaseAt(): ?\DateTimeInterface
+    {
+        return $this->purchaseAt;
+    }
+
+    public function setPurchaseAt(?\DateTimeInterface $purchaseAt): static
+    {
+        $this->purchaseAt = $purchaseAt;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): static
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }

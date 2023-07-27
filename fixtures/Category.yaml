@@ -1,0 +1,5 @@
+App\Entity\Category:
+  category{1..5}:
+    name: '<sentence(3)>'
+    representation: 'upload/tux.svg'
+    categories: '<numberBetween(0, 50)>x @category*'
