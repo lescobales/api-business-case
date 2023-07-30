@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\NftValueRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-
+#[ApiResource()]
 #[ORM\Entity(repositoryClass: NftValueRepository::class)]
 class NftValue
 {
