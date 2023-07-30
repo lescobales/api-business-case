@@ -8,33 +8,60 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: NftRepository::class)]
-#[ApiResource()]
+#[ApiResource(
+        collectionOperations:
+        [
+                        'get' => 
+                        [
+                            'normalization_context' => [
+                                'groups' => 'nft:list'
+                            ],
+                        ]
+        ],
+        itemOperations:
+        [
+                        'get' =>
+                        [
+                            'normalization_context' => [
+                                'groups' => 'nft:item'
+                            ],
+                        ]
+        ],
+)]
 class Nft
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups('nft:item')]
     private ?int $id = null;
 
     #[ORM\Column(length: 1000)]
+    #[Groups('nft:item')]
     private ?string $token = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups('nft:item')]
     private ?string $title = null;
 
     #[ORM\Column]
+    #[Groups('nft:item')]
     private ?float $initialPrice = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Groups('nft:item')]
     private ?\DateTimeInterface $createdAt = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups('nft:item')]
     private ?NftType $nftType = null;
 
     #[ORM\OneToMany(mappedBy: 'nft', targetEntity: NftValue::class)]
+    #[Groups('nft:item')]
     private Collection $nftValues;
 
     #[ORM\ManyToOne]

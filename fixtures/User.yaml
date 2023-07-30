@@ -2,7 +2,7 @@ App\Entity\User:
   user{1..200}:
     email (unique): '<email()>'
     roles: '[]'
-    password: '<password()>'
+    password: '1234'
     isMale: '<numberBetween(0, 1)>'
     firstName: '<firstname()>'
     lastName: '<lastName()>'
