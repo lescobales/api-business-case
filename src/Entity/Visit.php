@@ -6,19 +6,41 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\VisitRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-#[ApiResource()]
+use Symfony\Component\Serializer\Annotation\Groups;
+
+#[ApiResource(
+    collectionOperations:
+    [
+            'get' =>
+            [
+                'normalization_context' => [
+                    'groups' => 'visit:list'
+                ]
+            ],
+            'post' =>
+            [
+                'denormalization_context' => [
+                    'groups' => 'visit:post'
+                ]
+            ]
+    ],
+    itemOperations:[],
+)]
 #[ORM\Entity(repositoryClass: VisitRepository::class)]
 class Visit
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups('visit:list', 'visit:post', 'nft:item' , 'user:item')]
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Groups('visit:list', 'visit:post', 'nft:item' , 'user:item')]
     private ?\DateTimeInterface $visitDate = null;
 
     #[ORM\ManyToOne(inversedBy: 'visits')]
+    #[Groups('visit:list', 'visit:post', 'nft:item' , 'user:item')]
     private ?Nft $nft = null;
 
     public function getId(): ?int

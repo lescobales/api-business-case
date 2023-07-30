@@ -1,8 +1,11 @@
+parameters:
+  hash: '$2y$13$Q8nL8tAuXweQQNCuBgqPr.m50T8WB.qZgfFdL2iCUjT3BZInrbCb' #12345
+
 App\Entity\User:
   user{1..200}:
     email (unique): '<email()>'
     roles: '[]'
-    password: '1234'
+    password: <{hash}>
     isMale: '<numberBetween(0, 1)>'
     firstName: '<firstname()>'
     lastName: '<lastName()>'

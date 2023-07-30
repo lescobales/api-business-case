@@ -10,57 +10,94 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
-#[ApiResource()]
+#[ApiResource(
+    collectionOperations: [
+        'post' => [
+            'denormalization_context' => [
+                'groups' => 'user:post'
+            ]
+        ],
+        'get' => [
+            'normalization_context' => [
+                'groups' => 'user:list'
+            ]
+        ],
+    ],
+    itemOperations: [
+        'get' => [
+            'normalization_context' => [
+                'groups' => 'user:item'
+            ],
+        ],
+        'put',
+    ],
+    paginationItemsPerPage: 10,
+)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups('user:item')]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Groups('user:item', 'user:post')]
     private ?string $email = null;
 
     #[ORM\Column]
+    #[Groups('user:item')]
     private array $roles = [];
 
     /**
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Groups('user:item', 'user:post')]
     private ?string $password = null;
 
     #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Nft::class)]
+    #[Groups('user:item')]
     private Collection $nfts;
 
     #[ORM\ManyToOne(inversedBy: 'users')]
+    #[Groups('user:item')]
     private ?Address $address = null;
 
     #[ORM\OneToMany(mappedBy: 'asker', targetEntity: PreOrder::class)]
+    #[Groups('user:item')]
     private Collection $preOrders;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups('user:item')]
     private ?string $lastName = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups('user:item')]
     private ?string $firstName = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Groups('user:item')]
     private ?\DateTimeInterface $birthDate = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups('user:item')]
     private ?string $avatar = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Groups('user:item')]
     private ?\DateTimeInterface $createdAt = null;
 
     #[ORM\Column]
+    #[Groups('user:item')]
     private ?bool $isMale = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups('user:item', 'user:post')]
     private ?string $pseudo = null;
 
     public function __construct()
