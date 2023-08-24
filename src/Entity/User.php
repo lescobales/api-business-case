@@ -57,7 +57,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
-    #[Groups([]'user:item', 'user:post'])]
+    #[Groups(['user:item', 'user:post'])]
     private ?string $password = null;
 
     #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Nft::class)]
