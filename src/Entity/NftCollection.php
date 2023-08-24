@@ -43,15 +43,15 @@ class NftCollection
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups('nftCollection:item', 'nftCollection:list', 'user:item', 'nft:item')]
+    #[Groups(['nftCollection:item', 'nftCollection:list', 'user:item', 'nft:item'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups('nftCollection:item', 'nftCollection:list', 'nftCollection:post' ,'user:item', 'nft:item')]
+    #[Groups(['nftCollection:item', 'nftCollection:list', 'nftCollection:post' ,'user:item', 'nft:item'])]
     private ?string $designation = null;
 
     #[ORM\OneToMany(mappedBy: 'nftCollection', targetEntity: Nft::class)]
-    #[Groups('nftCollection:item', 'nftCollection:list', 'nftCollection:post' ,'user:item', 'nft:item')]
+    #[Groups(['nftCollection:item', 'nftCollection:list', 'nftCollection:post' ,'user:item', 'nft:item'])]
     private Collection $nfts;
 
     public function __construct()

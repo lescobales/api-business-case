@@ -43,32 +43,32 @@ class PreOrder
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups('preOrder:item', 'preOrder:list', 'user:item')]
+    #[Groups(['preOrder:item', 'preOrder:list', 'user:item'])]
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'preOrders')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups('preOrder:item', 'user:item')]
+    #[Groups(['preOrder:item', 'user:item'])]
     private ?User $asker = null;
 
     #[ORM\ManyToMany(targetEntity: Nft::class, inversedBy: 'preOrders')]
-    #[Groups('preOrder:item', 'user:item')]
+    #[Groups(['preOrder:item', 'user:item'])]
     private Collection $nfts;
 
     #[ORM\Column]
-    #[Groups('preOrder:item', 'preOrder:list', 'user:item')]
+    #[Groups(['preOrder:item', 'preOrder:list', 'user:item'])]
     private ?int $amount = null;
 
     #[ORM\Column]
-    #[Groups('preOrder:item', 'user:item')]
+    #[Groups(['preOrder:item', 'user:item'])]
     private ?bool $isPurchase = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    #[Groups('preOrder:item', 'preOrder:list', 'user:item')]
+    #[Groups(['preOrder:item', 'preOrder:list', 'user:item'])]
     private ?\DateTimeInterface $purchaseAt = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Groups('preOrder:item', 'preOrder:list', 'user:item')]
+    #[Groups(['preOrder:item', 'preOrder:list', 'user:item'])]
     private ?\DateTimeInterface $createdAt = null;
 
 

@@ -28,11 +28,11 @@ class NftType
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups( 'nftType:item','nft:item')]
+    #[Groups(['nftType:item','nft:item'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups('nftType:item', 'nft:list', 'nft:item')]
+    #[Groups(['nftType:item', 'nft:list', 'nft:item'])]
     private ?string $designation = null;
 
     public function getId(): ?int

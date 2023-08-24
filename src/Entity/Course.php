@@ -40,15 +40,15 @@ class Course
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups('course:list', 'course:item')]
+    #[Groups(['course:list', 'course:item'])]
     private ?int $id = null;
 
     #[ORM\Column]
-    #[Groups('course:list', 'course:item')]
+    #[Groups(['course:list', 'course:item'])]
     private ?float $eurCourse = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Groups('course:list', 'course:item')]
+    #[Groups(['course:list', 'course:item'])]
     private ?\DateTimeInterface $createdAt = null;
 
     public function getId(): ?int

@@ -39,15 +39,15 @@ class NftValue
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups('nftValue:item', 'nftValue:list', 'nft:list')]
+    #[Groups(['nftValue:item', 'nftValue:list', 'nft:list'])]
     private ?int $id = null;
 
     #[ORM\Column]
-    #[Groups('nftValue:item', 'nftValue:list', 'nft:list')]
+    #[Groups(['nftValue:item', 'nftValue:list', 'nft:list'])]
     private ?float $weight = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Groups('nftValue:item', 'nftValue:list', 'nft:list')]
+    #[Groups(['nftValue:item', 'nftValue:list', 'nft:list'])]
     private ?\DateTimeInterface $createdAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'nftValues')]

@@ -32,15 +32,15 @@ class Visit
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups('visit:list', 'visit:post', 'nft:item' , 'user:item')]
+    #[Groups(['visit:list', 'visit:post', 'nft:item' , 'user:item'])]
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Groups('visit:list', 'visit:post', 'nft:item' , 'user:item')]
+    #[Groups(['visit:list', 'visit:post', 'nft:item' , 'user:item'])]
     private ?\DateTimeInterface $visitDate = null;
 
     #[ORM\ManyToOne(inversedBy: 'visits')]
-    #[Groups('visit:list', 'visit:post', 'nft:item' , 'user:item')]
+    #[Groups(['visit:list', 'visit:post', 'nft:item' , 'user:item'])]
     private ?Nft $nft = null;
 
     public function getId(): ?int

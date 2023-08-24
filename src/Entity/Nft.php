@@ -45,41 +45,41 @@ class Nft
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups('user:item', 'nft:item')]
+    #[Groups(['user:item', 'nft:item'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 1000)]
-    #[Groups('nft:item', 'nft:list', 'user:item')]
+    #[Groups(['nft:item', 'nft:list', 'user:item'])]
     private ?string $token = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups('nft:item', 'nft:list', 'user:item')]
+    #[Groups(['nft:item', 'nft:list', 'user:item'])]
     private ?string $title = null;
 
     #[ORM\Column]
-    #[Groups('nft:item', 'nft:list', 'user:item')]
+    #[Groups(['nft:item', 'nft:list', 'user:item'])]
     private ?float $initialPrice = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Groups('nft:item', 'nft:list', 'user:item')]
+    #[Groups(['nft:item', 'nft:list', 'user:item'])]
     private ?\DateTimeInterface $createdAt = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups('nft:item', 'nft:list', 'user:item')]
+    #[Groups(['nft:item', 'nft:list', 'user:item'])]
     private ?NftType $nftType = null;
 
     #[ORM\OneToMany(mappedBy: 'nft', targetEntity: NftValue::class)]
-    #[Groups('nft:item', 'nft:list', 'user:item')]
+    #[Groups(['nft:item', 'nft:list', 'user:item'])]
     private Collection $nftValues;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups('nft:item', 'nft:list', 'user:item')]
+    #[Groups(['nft:item', 'nft:list', 'user:item'])]
     private ?Category $category = null;
 
     #[ORM\OneToMany(mappedBy: 'nft', targetEntity: Visit::class)]
-    #[Groups('nft:item', 'user:item')]
+    #[Groups(['nft:item', 'user:item'])]
     private Collection $visits;
 
     #[ORM\ManyToOne(inversedBy: 'nfts')]
@@ -88,15 +88,15 @@ class Nft
     private ?User $owner = null;
 
     #[ORM\ManyToMany(targetEntity: PreOrder::class, mappedBy: 'nfts')]
-    #[Groups('nft:item', 'user:item')]
+    #[Groups(['nft:item', 'user:item'])]
     private Collection $preOrders;
 
     #[ORM\ManyToOne(inversedBy: 'nfts')]
-    #[Groups('nft:item', 'user:item')]
+    #[Groups(['nft:item', 'user:item'])]
     private ?NftCollection $nftCollection = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups('nft:item', 'nft:list', 'user:item')]
+    #[Groups(['nft:item', 'nft:list', 'user:item'])]
     private ?string $representation = null;
 
     public function __construct()

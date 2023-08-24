@@ -29,26 +29,26 @@ class Address
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups('address:item', 'user:item')]
+    #[Groups(['address:item', 'user:item'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups('address:item', 'user:item')]
+    #[Groups(['address:item', 'user:item'])]
     private ?string $line1 = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups('address:item', 'user:item')]
+    #[Groups(['address:item', 'user:item'])]
     private ?string $line2 = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups('address:item', 'user:item')]
+    #[Groups(['address:item', 'user:item'])]
     private ?string $line3 = null;
 
     #[ORM\Column(length: 10)]
-    #[Groups('address:item', 'user:item')]
+    #[Groups(['address:item', 'user:item'])]
     private ?string $postCode = null;
 
-    #[ORM\Column(length: 255)]#[Groups('address:item', 'user:item')]
+    #[ORM\Column(length: 255)]#[Groups(['address:item', 'user:item'])]
     private ?string $city = null;
 
     #[ORM\OneToMany(mappedBy: 'address', targetEntity: User::class)]

@@ -28,23 +28,23 @@ class Category
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups('nft:item', 'category:item')]
+    #[Groups(['nft:item', 'category:item'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups('nft:item', 'category:item')]
+    #[Groups(['nft:item', 'category:item'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups('nft:item', 'category:item')]
+    #[Groups(['nft:item', 'category:item'])]
     private ?string $representation = null;
 
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'categories')]
-    #[Groups('nft:item', 'category:item')]
+    #[Groups(['nft:item', 'category:item'])]
     private ?self $category = null;
 
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: self::class)]
-    #[Groups('nft:item', 'category:item')]
+    #[Groups(['nft:item', 'category:item'])]
     private Collection $categories;
 
     public function __construct()

@@ -46,7 +46,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Groups('user:item', 'user:post')]
+    #[Groups(['user:item', 'user:post'])]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -57,7 +57,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
-    #[Groups('user:item', 'user:post')]
+    #[Groups([]'user:item', 'user:post'])]
     private ?string $password = null;
 
     #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Nft::class)]
@@ -97,7 +97,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?bool $isMale = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups('user:item', 'user:post')]
+    #[Groups(['user:item', 'user:post'])]
     private ?string $pseudo = null;
 
     public function __construct()
