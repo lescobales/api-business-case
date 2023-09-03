@@ -32,7 +32,7 @@ class Category
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['nft:item', 'category:item'])]
+    #[Groups(['nft:item', 'category:item', 'nft:list'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255, nullable: true)]

@@ -42,16 +42,16 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
-        - { path : ^/api/login, roles : IS_AUTHENTICATED_ANONYMOUSLY}
-        - { path : ^/api/docs, roles : IS_AUTHENTICATED_ANONYMOUSLY}
-        - { path : ^/api/courses, roles : IS_AUTHENTICATED_ANONYMOUSLY}
-        - { path : ^/api/categories, roles : IS_AUTHENTICATED_ANONYMOUSLY}
-        - { path : ^/api/nft_types, roles : IS_AUTHENTICATED_ANONYMOUSLY}
-        - { path : ^/api/nft_values, roles : IS_AUTHENTICATED_ANONYMOUSLY}
-        - { path : ^/api/users, roles : IS_AUTHENTICATED_ANONYMOUSLY, method: 'POST'}
-        - { path : ^/api/nfts/, roles : IS_AUTHENTICATED_FULLY}
-        - { path : ^/api/nfts, roles : IS_AUTHENTICATED_ANONYMOUSLY , method: 'GET'}
-        - { path : ^/api, roles : IS_AUTHENTICATED_FULLY}
+        #- { path : ^/api/login, roles : IS_AUTHENTICATED_ANONYMOUSLY}
+        #- { path : ^/api/docs, roles : IS_AUTHENTICATED_ANONYMOUSLY}
+        #- { path : ^/api/courses, roles : IS_AUTHENTICATED_ANONYMOUSLY}
+        #- { path : ^/api/categories, roles : IS_AUTHENTICATED_ANONYMOUSLY}
+        #- { path : ^/api/nft_types, roles : IS_AUTHENTICATED_ANONYMOUSLY}
+        #- { path : ^/api/nft_values, roles : IS_AUTHENTICATED_ANONYMOUSLY}
+        #- { path : ^/api/users, roles : IS_AUTHENTICATED_ANONYMOUSLY, method: 'POST'}
+        #- { path : ^/api/nfts/, roles : IS_AUTHENTICATED_FULLY}
+        #- { path : ^/api/nfts, roles : IS_AUTHENTICATED_ANONYMOUSLY , method: 'GET'}
+        #- { path : ^/api, roles : IS_AUTHENTICATED_FULLY}
 
 when@test:
     security:

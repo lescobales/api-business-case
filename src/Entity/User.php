@@ -19,7 +19,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
         'post' => [
             'denormalization_context' => [
                 'groups' => 'user:post'
-            ]
+	    ], 
         ],
         'get' => [
             'normalization_context' => [
@@ -34,6 +34,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
             ],
         ],
         'put',
+        'patch'
     ],
     paginationItemsPerPage: 10,
 )]
@@ -42,7 +43,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups('user:item')]
+    #[Groups('user:item', 'user:list')]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
@@ -61,7 +62,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Nft::class)]
-    #[Groups('user:item')]
+    //#[Groups('user:item')]
     private Collection $nfts;
 
     #[ORM\ManyToOne(inversedBy: 'users')]
@@ -69,7 +70,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?Address $address = null;
 
     #[ORM\OneToMany(mappedBy: 'asker', targetEntity: PreOrder::class)]
-    #[Groups('user:item')]
+    //#[Groups('user:item')]
     private Collection $preOrders;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -85,7 +86,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?\DateTimeInterface $birthDate = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups('user:item')]
+    #[Groups(['user:item', 'user-list'])]
     private ?string $avatar = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
@@ -97,7 +98,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?bool $isMale = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['user:item', 'user:post'])]
+    #[Groups(['user:item', 'user:list'])]
     private ?string $pseudo = null;
 
     public function __construct()

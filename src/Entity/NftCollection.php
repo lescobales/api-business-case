@@ -8,6 +8,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Annotation\ApiFilter;
+
 #[ApiResource(
     collectionOperations:
     [
@@ -37,21 +40,22 @@ use Symfony\Component\Serializer\Annotation\Groups;
                 'delete',
     ]
 )]
+#[ApiFilter(SearchFilter::class, properties:['nfts.id' => 'exact'])]
 #[ORM\Entity(repositoryClass: NftCollectionRepository::class)]
 class NftCollection
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['nftCollection:item', 'nftCollection:list', 'user:item', 'nft:item'])]
+    #[Groups(['nftCollection:item', 'nftCollection:list'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['nftCollection:item', 'nftCollection:list', 'nftCollection:post' ,'user:item', 'nft:item'])]
+    #[Groups(['nftCollection:item', 'nftCollection:list', 'nftCollection:post'])]
     private ?string $designation = null;
 
     #[ORM\OneToMany(mappedBy: 'nftCollection', targetEntity: Nft::class)]
-    #[Groups(['nftCollection:item', 'nftCollection:list', 'nftCollection:post' ,'user:item', 'nft:item'])]
+    #[Groups(['nftCollection:item', 'nftCollection:list', 'nftCollection:post'])]
     private Collection $nfts;
 
     public function __construct()

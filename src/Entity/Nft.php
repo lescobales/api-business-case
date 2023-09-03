@@ -9,7 +9,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
-
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Annotation\ApiFilter;
 #[ORM\Entity(repositoryClass: NftRepository::class)]
 #[ApiResource(
         collectionOperations:
@@ -19,6 +20,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
                 'normalization_context' => [
                     'groups' => 'nft:list'
                 ],
+
             ],
             'post' => 
             [
@@ -40,63 +42,65 @@ use Symfony\Component\Serializer\Annotation\Groups;
         ],
         paginationItemsPerPage: 10,
 )]
+
+#[ApiFilter(SearchFilter::class, properties:['owner.id' => 'exact'])]
 class Nft
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['user:item', 'nft:item'])]
+    #[Groups(['nft:item', 'nft:list'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 1000)]
-    #[Groups(['nft:item', 'nft:list', 'user:item'])]
+    #[Groups(['nft:item', 'nft:list'])] 
     private ?string $token = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['nft:item', 'nft:list', 'user:item'])]
+    #[Groups(['nft:item', 'nft:list'])] 
     private ?string $title = null;
 
     #[ORM\Column]
-    #[Groups(['nft:item', 'nft:list', 'user:item'])]
+    #[Groups(['nft:item', 'nft:list'])] 
     private ?float $initialPrice = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Groups(['nft:item', 'nft:list', 'user:item'])]
+    #[Groups(['nft:item', 'nft:list'])] 
     private ?\DateTimeInterface $createdAt = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['nft:item', 'nft:list', 'user:item'])]
+    #[Groups(['nft:item', 'nft:list'])] 
     private ?NftType $nftType = null;
 
     #[ORM\OneToMany(mappedBy: 'nft', targetEntity: NftValue::class)]
-    #[Groups(['nft:item', 'nft:list', 'user:item'])]
+    #[Groups(['nft:item'])] 
     private Collection $nftValues;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['nft:item', 'nft:list', 'user:item'])]
+    #[Groups(['nft:item', 'nft:list'])] 
     private ?Category $category = null;
 
     #[ORM\OneToMany(mappedBy: 'nft', targetEntity: Visit::class)]
-    #[Groups(['nft:item', 'user:item'])]
+    #[Groups(['nft:item'])]
     private Collection $visits;
 
     #[ORM\ManyToOne(inversedBy: 'nfts')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups('nft:item')]
+    #[Groups(['nft:item'])]
     private ?User $owner = null;
 
     #[ORM\ManyToMany(targetEntity: PreOrder::class, mappedBy: 'nfts')]
-    #[Groups(['nft:item', 'user:item'])]
+    #[Groups('nft:item')]
     private Collection $preOrders;
 
     #[ORM\ManyToOne(inversedBy: 'nfts')]
-    #[Groups(['nft:item', 'user:item'])]
+    #[Groups(['nft:item'])]
     private ?NftCollection $nftCollection = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['nft:item', 'nft:list', 'user:item'])]
+    #[Groups(['nft:item', 'nft:list'])]
     private ?string $representation = null;
 
     public function __construct()

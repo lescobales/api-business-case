@@ -48,11 +48,11 @@ class PreOrder
 
     #[ORM\ManyToOne(inversedBy: 'preOrders')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['preOrder:item', 'user:item'])]
+    #[Groups(['preOrder:item'])]
     private ?User $asker = null;
 
     #[ORM\ManyToMany(targetEntity: Nft::class, inversedBy: 'preOrders')]
-    #[Groups(['preOrder:item', 'user:item'])]
+    #[Groups(['preOrder:item'])]
     private Collection $nfts;
 
     #[ORM\Column]

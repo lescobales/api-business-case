@@ -24,7 +24,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
                 ]
             ]
     ],
-    itemOperations:[],
+    itemOperations:['get'],
 )]
 #[ORM\Entity(repositoryClass: VisitRepository::class)]
 class Visit
@@ -32,15 +32,15 @@ class Visit
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['visit:list', 'visit:post', 'nft:item' , 'user:item'])]
+    #[Groups(['visit:list', 'visit:post', 'user:item'])]
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Groups(['visit:list', 'visit:post', 'nft:item' , 'user:item'])]
+    #[Groups(['visit:list', 'visit:post', 'user:item'])]
     private ?\DateTimeInterface $visitDate = null;
 
     #[ORM\ManyToOne(inversedBy: 'visits')]
-    #[Groups(['visit:list', 'visit:post', 'nft:item' , 'user:item'])]
+    #[Groups(['visit:list', 'visit:post'])]
     private ?Nft $nft = null;
 
     public function getId(): ?int
