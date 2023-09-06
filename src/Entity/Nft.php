@@ -74,7 +74,7 @@ class Nft
     private ?NftType $nftType = null;
 
     #[ORM\OneToMany(mappedBy: 'nft', targetEntity: NftValue::class)]
-    #[Groups(['nft:item'])] 
+    #[Groups(['nft:item', 'nft:list'])] 
     private Collection $nftValues;
 
     #[ORM\ManyToOne]

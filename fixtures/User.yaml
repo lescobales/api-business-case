@@ -10,7 +10,7 @@ App\Entity\User:
     firstName: '<firstname()>'
     lastName: '<lastName()>'
     birthDate: '<dateTimeBetween()>'
-    avatar: 'upload/tux.svg'
+    avatar: 'https://randomuser.me/api/portraits/med/men/<numberBetween(1,90)>.jpg'
     createdAt: '<dateTimeBetween()>'
     pseudo: '<word()>'
     address: '@address*'

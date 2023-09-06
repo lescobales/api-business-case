@@ -4,7 +4,8 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Core\Bridge\Doctrine\MongoDbOdm\Filter\OrderFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\NftValueRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -31,6 +32,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
     ],
     paginationItemsPerPage: 7,
 )]
+
+#[ApiFilter(SearchFilter::class, 
+	    properties: ['nft.id' => 'exact'])]
 #[ApiFilter(OrderFilter::class, 
             properties: ['createdAt' => 'DESC'])]
 #[ORM\Entity(repositoryClass: NftValueRepository::class)]

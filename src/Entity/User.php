@@ -16,11 +16,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Table(name: '`user`')]
 #[ApiResource(
     collectionOperations: [
-        'post' => [
-            'denormalization_context' => [
-                'groups' => 'user:post'
+	    'post' => [
+		    'denormalization_context' => [
+			    'groups' => 'user:post'
+	    ] 
 	    ], 
-        ],
         'get' => [
             'normalization_context' => [
                 'groups' => 'user:list'
@@ -34,7 +34,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
             ],
         ],
         'put',
-        'patch'
+	'patch'
     ],
     paginationItemsPerPage: 10,
 )]
@@ -43,11 +43,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups('user:item', 'user:list')]
+    #[Groups(['user:item', 'user:list'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Groups(['user:item', 'user:post'])]
+    #[Groups(['user:item', 'user:post', 'user:list'])]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -74,19 +74,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $preOrders;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups('user:item')]
+    #[Groups(['user:item'])]
     private ?string $lastName = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups('user:item')]
+    #[Groups(['user:item'])]
     private ?string $firstName = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    #[Groups('user:item')]
+    #[Groups(['user:item'])]
     private ?\DateTimeInterface $birthDate = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['user:item', 'user-list'])]
+    #[Groups(['user:item', 'user:list'])]
     private ?string $avatar = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
