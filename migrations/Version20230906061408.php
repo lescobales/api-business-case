@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20230727133706 extends AbstractMigration
+final class Version20230906061408 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -23,6 +23,7 @@ final class Version20230727133706 extends AbstractMigration
         $this->addSql('CREATE TABLE address (id INT AUTO_INCREMENT NOT NULL, line1 VARCHAR(255) NOT NULL, line2 VARCHAR(255) DEFAULT NULL, line3 VARCHAR(255) DEFAULT NULL, post_code VARCHAR(10) NOT NULL, city VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE category (id INT AUTO_INCREMENT NOT NULL, category_id INT DEFAULT NULL, name VARCHAR(255) NOT NULL, representation VARCHAR(255) DEFAULT NULL, INDEX IDX_64C19C112469DE2 (category_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE course (id INT AUTO_INCREMENT NOT NULL, eur_course DOUBLE PRECISION NOT NULL, created_at DATETIME NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE get_action (id INT AUTO_INCREMENT NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE nft (id INT AUTO_INCREMENT NOT NULL, nft_type_id INT NOT NULL, category_id INT NOT NULL, owner_id INT NOT NULL, nft_collection_id INT DEFAULT NULL, token VARCHAR(1000) NOT NULL, title VARCHAR(255) NOT NULL, initial_price DOUBLE PRECISION NOT NULL, created_at DATETIME NOT NULL, representation VARCHAR(255) DEFAULT NULL, INDEX IDX_D9C7463CCCB558BB (nft_type_id), INDEX IDX_D9C7463C12469DE2 (category_id), INDEX IDX_D9C7463C7E3C61F9 (owner_id), INDEX IDX_D9C7463C327C6A9D (nft_collection_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE nft_collection (id INT AUTO_INCREMENT NOT NULL, designation VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE nft_type (id INT AUTO_INCREMENT NOT NULL, designation VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
@@ -62,6 +63,7 @@ final class Version20230727133706 extends AbstractMigration
         $this->addSql('DROP TABLE address');
         $this->addSql('DROP TABLE category');
         $this->addSql('DROP TABLE course');
+        $this->addSql('DROP TABLE get_action');
         $this->addSql('DROP TABLE nft');
         $this->addSql('DROP TABLE nft_collection');
         $this->addSql('DROP TABLE nft_type');

@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\User;
+use App\Entity\NftValue;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -37,6 +39,28 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $user->setPassword($newHashedPassword);
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
+    }
+
+    public function getUserInfo($limit = 10, $offset = 0){
+	    return $this->createQueryBuilder('u')
+    ->select('u.pseudo', 'u.avatar', 'count(n) as nbNft', 'count(c) as nbCollection', 'COALESCE(sum(v.weight), 0) as totalWeight')
+    ->leftJoin('u.nfts', 'n')
+    ->leftJoin('n.nftCollection', 'c')
+    ->leftJoin(
+        'n.nftValues',
+        'v',
+        Join::WITH,
+        'v.createdAt = (
+            SELECT MAX(v2.createdAt)
+            FROM  App\Entity\NftValue v2
+            WHERE v2.nft = n.id
+        )'
+    )
+    ->groupBy('u.id', 'u.pseudo')
+    ->setFirstResult($offset)
+    ->setMaxResults($limit)
+    ->getQuery()
+    ->getResult();
     }
 
 //    /**

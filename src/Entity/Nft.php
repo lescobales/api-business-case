@@ -43,7 +43,7 @@ use ApiPlatform\Core\Annotation\ApiFilter;
         paginationItemsPerPage: 10,
 )]
 
-#[ApiFilter(SearchFilter::class, properties:['owner.id' => 'exact'])]
+#[ApiFilter(SearchFilter::class, properties:['owner.pseudo' => 'exact'])]
 class Nft
 {
     #[ORM\Id]

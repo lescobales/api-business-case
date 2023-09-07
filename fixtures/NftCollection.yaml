@@ -1,4 +1,4 @@
 App\Entity\NftCollection:
     collection{1..10}:
       designation: '<sentence(5)>'
-      nfts: '<numberBetween(1,10)>x @nft*'
+      nfts: '<numberBetween(1, 10)>x @nft*'
